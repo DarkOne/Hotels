@@ -43,5 +43,5 @@ class Hotel(models.Model):
 
 class HotelRoom(models.Model):
     name = models.CharField(max_length=32)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
     guests_count = models.SmallIntegerField()    
