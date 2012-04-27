@@ -7,7 +7,7 @@ from django.db import models
 class Country(models.Model):
     name = models.TextField()
     name_eng = models.TextField()
-    is_favourite = models.BooleanField()
+    is_favorite = models.BooleanField()
     visa_support = models.BooleanField()
     currency = models.CharField(max_length=3)
     
@@ -16,23 +16,21 @@ class City(models.Model):
     name_eng = models.TextField()
     is_capital = models.BooleanField()
     is_favorite = models.BooleanField()
-    latitude = models.TextField()
-    longitude = models.TextField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
     country_id = models.ForeignKey(Country)
     
-class Hotels(models.Model):
+class Hotel(models.Model):
     city_id = models.ForeignKey(City)
     country_id = models.ForeignKey(Country)
-    category = models.IntegerField()
     name = models.TextField()
     star_rating = models.DecimalField(max_digits=2, decimal_places=1)
-    customer_rating = models.DecimalField(max_digits=2, decimal_places=1)
     address = models.TextField()
-    latitude = models.TextField()
-    longitude = models.TextField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
     telephone = models.TextField()
     fax = models.TextField()
-    email = models.EmailField()
+    email = models.EmailField(max_length=100)
     web = models.URLField()
     location = models.TextField()
     report_location = models.TextField()
@@ -42,8 +40,8 @@ class Hotels(models.Model):
     report_exterior = models.TextField()
     report_lobby = models.TextField()
     report_restaurant = models.TextField()
-    
+
 class HotelRoom(models.Model):
     name = models.CharField(max_length=32)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
     guests_count = models.SmallIntegerField()    
