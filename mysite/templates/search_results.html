@@ -1,0 +1,12 @@
+<p>You searched for: <strong>{{ query }}</strong></p>
+
+{% if city %}
+    <p>Found {{ city|length }} cities.</p>
+    <ul>
+        {% for cit in city %}
+        <li>{{ cit.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No city matched your search criteria.</p>
+{% endif %}
