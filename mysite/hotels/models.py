@@ -18,11 +18,11 @@ class City(models.Model):
     is_favorite = models.BooleanField()
     latitude = models.FloatField()
     longitude = models.FloatField()
-    country_id = models.ForeignKey(Country)
+    country = models.ForeignKey(Country)
     
 class Hotel(models.Model):
-    city_id = models.ForeignKey(City)
-    country_id = models.ForeignKey(Country)
+    city = models.ForeignKey(City)
+    country = models.ForeignKey(Country)
     name = models.TextField()
     star_rating = models.DecimalField(max_digits=2, decimal_places=1)
     address = models.TextField()
@@ -43,6 +43,6 @@ class Hotel(models.Model):
 
 class HotelRoom(models.Model):
     name = models.CharField(max_length=32)
-    hotel_id = models.ForeignKey(Hotel)
+    hotel = models.ForeignKey(Hotel)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     guests_count = models.SmallIntegerField()    
