@@ -17,6 +17,6 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     ('^$', views.searchy),
     ('^time/$', views.current_datetime),
-    (r'^search-form/$', views.search_form),
+    (r'^search_form/$', views.search_form),
     (r'^search/$', views.search),
 )
