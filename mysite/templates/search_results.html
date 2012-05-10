@@ -21,3 +21,8 @@
 {% else %}
     <p>No city matched your search criteria.</p>
 {% endif %}
+<ul>
+    {% for c in city2 %}
+        <li>{{ c.name_eng }}</li>
+    {% endfor %}
+</ul>

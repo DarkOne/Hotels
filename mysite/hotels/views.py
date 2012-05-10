@@ -1,7 +1,7 @@
 # Create your views here.
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from mysite.hotels.models import City, Hotel, HotelRoom
+from mysite.hotels.models import City, Hotel, HotelRoom, Country
 import datetime
 
 def hello(request):
@@ -33,10 +33,10 @@ def search(request):
             
             hotelroom = HotelRoom.objects.filter(hotel_id = hotel_id).order_by("name")
             #hotelroom2 = HotelRoom.objects.raw('SELECT r.* FROM hotels_city c, 
-             #   hotels_hotel h, hotels_hotelroom r WHERE c.name = %s', [q]).order_by("name")
-            
+             #   hotels_hotel h, hotels_hotelroom r WHERE c.name = %s ', [q]).order_by("name")
+            city2 = City.objects.raw('SELECT hotels_city.id, hotels_city.name_eng FROM hotels_city LIMIT 10')
             return render_to_response('search_results.html',
-                {'hotel': hotel, 'query': city[0].name, 'hotelroom': hotelroom, 'hotelname': hotel[0].name})
+                {'hotel': hotel, 'query': city[0].name, 'hotelroom': hotelroom, 'hotelname': hotel[0].name, 'city2': city2})
         else:
             return HttpResponse('Please submit a search term.')
 
