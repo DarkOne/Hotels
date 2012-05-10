@@ -1,28 +1,14 @@
-<p>Вы ищете отели в городе <strong>{{ city }}</strong></p>
+<p>Вы ищете номера в городе <strong>{{ city }}</strong></p>
 
-{% if hotel %}
-    <p>Найдено {{ hotel|length }} отелей.</p>
+{% if room %}
+    <p>Найдено {{ room.length }} номеров на {{ guests }} человека.</p>
     <ul>
-        {% for a in hotel %}
-        <li>{{ a.name }}  {{ a.star_rating }}</li>
+        {% for c in room %}
+            <li>Отель <strong>{{ c.hname }}</strong>. Номер <strong>{{ c.name }}</strong>. {{ c.guests_count }}</li>
         {% endfor %}
     </ul>
 {% else %}
-    <p>No city matched your search criteria.</p>
+    <p>Комнат не найдено.</p>
 {% endif %}
 
-{% if hotelroom %}
-    <p>Найдено {{ hotelroom|length }} комнат в отеле <strong>{{ hotelname }}</strong></p>
-    <ul>
-        {% for b in hotelroom %}
-        <li>{{ b.name }}  {{ b.price }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No city matched your search criteria.</p>
-{% endif %}
-<ul>
-    {% for c in city2 %}
-        <li>{{ c.name_eng }}</li>
-    {% endfor %}
-</ul>
+

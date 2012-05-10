@@ -1,4 +1,6 @@
 # Create your views here.
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from mysite.hotels.models import City, Hotel, HotelRoom, Country
@@ -22,21 +24,20 @@ def search_form(request):
     return render_to_response('search_form.html')
     
 def search(request):
-    if 'q' in request.GET and request.GET['q']:
-        if 'n' in request.GET and request.GET['n']:
-            q = request.GET['q']
-            n = request.GET['n']
-            city = City.objects.filter(name__icontains=q).order_by("name")
-            city_id = city[0].id
-            hotel = Hotel.objects.filter(city_id = city_id).order_by("name")
-            hotel_id = hotel[0].id
-            
-            hotelroom = HotelRoom.objects.filter(hotel_id = hotel_id).order_by("name")
+    if 'city' in request.GET and request.GET['city']:
+        if 'guests' in request.GET and request.GET['guests']:
+            city_to_find = request.GET['city']
+            guests = request.GET['guests']
+            city = City.objects.filter(name__icontains=city_to_find).order_by("name")
             #hotelroom2 = HotelRoom.objects.raw('SELECT r.* FROM hotels_city c, 
-             #   hotels_hotel h, hotels_hotelroom r WHERE c.name = %s ', [q]).order_by("name")
-            city2 = City.objects.raw('SELECT hotels_city.id, hotels_city.name_eng FROM hotels_city LIMIT 10')
-            return render_to_response('search_results.html',
-                {'hotel': hotel, 'query': city[0].name, 'hotelroom': hotelroom, 'hotelname': hotel[0].name, 'city2': city2})
+            #   hotels_hotel h, hotels_hotelroom r WHERE c.name = %s ', [q]).order_by("name")
+            ctr = city_to_find 
+            #city2 = City.objects.raw('SELECT city.id, country.id, city.name FROM hotels_city city, hotels_country country WHERE country.id = city.country_id AND country.name = %s', [ctr])
+            room = HotelRoom.objects.raw('SELECT city.id, hotel.name AS hname, room.name, room.guests_count \
+                                    FROM hotels_city city, hotels_hotel hotel, hotels_hotelroom room \
+                                    WHERE city.id = hotel.city_id AND hotel.id = room.hotel_id \
+                                    AND city.name = %s AND room.guests_count = %s ORDER BY hname', [ctr, guests])
+            return render_to_response('search_results.html', {'city': city_to_find, 'guests': guests, 'room': room})
         else:
             return HttpResponse('Please submit a search term.')
 
