@@ -1,10 +1,11 @@
-<p>Вы ищете номера в городе <strong>{{ city }}</strong></p>
+
+<p>Вы ищете номера в городе <strong>{{ city.name }}</strong></p>
 
 {% if room %}
-    <p>Найдено {{ room.length }} номеров на {{ guests }} человека.</p>
+    <p>Найдено {{ room|length }} номеров на {{ guests }} человека.</p>
     <ul>
         {% for c in room %}
-            <li>Отель <strong>{{ c.hname }}</strong>. Номер <strong>{{ c.name }}</strong>. {{ c.guests_count }}</li>
+            <li>Номер <strong>{{ c.name }}</strong>. {{ c.guests_count }}</li>
         {% endfor %}
     </ul>
 {% else %}
