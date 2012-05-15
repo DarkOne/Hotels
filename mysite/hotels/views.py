@@ -40,9 +40,19 @@ def search(request):
                                     WHERE city.id = hotel.city_id AND hotel.id = room.hotel_id \
                                     AND city.name ILIKE %s AND room.guests_count = %s ORDER BY hname', [ctr, guests])
             room = list(room)
-            return render_to_response('search_results.html', {'city': city, 'guests': guests, 'room': room})
+            count = len(room)
+            hotel = ''
+            rooms = []
+            for i in room:
+                if hotel != i.hname:
+                    rooms.append(i.hname)
+                    hotel = i.hname
+                rooms.append(i)
+            l = len(rooms)           
+            
+            return render_to_response('search_results.html', {'city': city, 'guests': guests, 'count': count, 'rooms': rooms})
         else:
-            return HttpResponse('Please submit a search term.')
+            return HttpResponse('Выберите количество гостей.')
 
     else:
-        return HttpResponse('Please submit a search term.')
+        return HttpResponse('Проверьте искомый город.')

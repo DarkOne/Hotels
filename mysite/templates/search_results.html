@@ -1,11 +1,17 @@
 
 <p>Вы ищете номера в городе <strong>{{ city.name }}</strong></p>
 
-{% if room %}
-    <p>Найдено {{ room|length }} номеров на {{ guests }} человека.</p>
+{% if rooms %}
+    <p>Найдено {{ count }} номеров на {{ guests }} человека.</p>
     <ul>
-        {% for c in room %}
-            <li>Номер <strong>{{ c.name }}</strong>. {{ c.guests_count }}</li>
+        {% for c in rooms %}
+            {% if c.name %}
+                <li>Номер <strong>{{ c.name }}</strong>.</li>
+            {% else %}
+                <p>
+                Отель: <strong> {{ c }} </strong>
+                <p>
+            {% endif %}
         {% endfor %}
     </ul>
 {% else %}
