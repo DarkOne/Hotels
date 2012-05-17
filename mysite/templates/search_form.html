@@ -4,8 +4,8 @@
 </head>
 <body>
     <form action="/search/" method="get">
+        Выберите город:
         <input type="text" name="city">
-        <input type="submit" value="Search">
         <p><select size="4" name="guests">
             <option disabled>Выберите количество гостей:</option>
             <option value="1">1</option>
@@ -13,6 +13,10 @@
             <option value="3">3</option>
             <option value="4">4</option>
         </select></p>
+        <p>Выберите желаемые даты бронирования</p>
+        С <input value={{ now }} type="date" />
+        По <input value={{ now }} type="date" />
+        <p><input type="submit" value="Поиск"></p>
     </form>
 </body>
 </html>

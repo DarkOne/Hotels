@@ -46,3 +46,9 @@ class HotelRoom(models.Model):
     hotel = models.ForeignKey(Hotel)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     guests_count = models.SmallIntegerField()    
+
+class Booking(models.Model):
+    check_in = models.DateField()
+    check_out = models.DateField()
+    room = models.ForeignKey(HotelRoom)
+    guest_name = models.CharField(max_length=128)
