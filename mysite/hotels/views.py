@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from mysite.hotels.models import City, Hotel, HotelRoom, Country
+from mysite.hotels.models import City, Hotel, HotelRoom, Country, Booking
 import datetime
 
 def hello(request):
@@ -29,6 +29,8 @@ def search(request):
         if 'guests' in request.GET and request.GET['guests']:
             city_to_find = request.GET['city']
             guests = request.GET['guests']
+            check_in = request.GET['in']
+            check_out = request.GET['out']
             city = City.objects.filter(name__icontains=city_to_find).order_by("name")[0]
             #hotelroom2 = HotelRoom.objects.raw('SELECT r.* FROM hotels_city c, 
             #   hotels_hotel h, hotels_hotelroom r WHERE c.name = %s ', [q]).order_by("name")
@@ -51,7 +53,7 @@ def search(request):
                 rooms.append(i)
             l = len(rooms)           
             
-            return render_to_response('search_results.html', {'city': city, 'guests': guests, 'count': count, 'rooms': rooms})
+            return render_to_response('search_results.html', {'city': city, 'guests': guests, 'count': count, 'rooms': rooms, 'in': check_in, 'out': check_out})
         else:
             return HttpResponse('Выберите количество гостей.')
 

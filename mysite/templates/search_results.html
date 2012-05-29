@@ -3,6 +3,7 @@
 
 {% if rooms %}
     <p>Найдено {{ count }} номеров на {{ guests }} человека.</p>
+    Дата заселения: {{ in }}    Дата выселения: {{ out }}
     <ul>
         {% for c in rooms %}
             {% if c.name %}
