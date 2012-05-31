@@ -41,7 +41,13 @@ def search(request):
             room = HotelRoom.objects.raw('SELECT city.id, hotel.name AS hname, room.name, room.guests_count \
                                     FROM hotels_city city, hotels_hotel hotel, hotels_hotelroom room \
                                     WHERE city.id = hotel.city_id AND hotel.id = room.hotel_id \
-                                    AND city.name ILIKE %s AND room.guests_count = %s ORDER BY hname', [ctr, guests])
+                                    AND city.name ILIKE %s AND room.guests_count = %s \
+                                    AND NOT EXISTS \
+                                    (SELECT 1 FROM hotels_booking booking WHERE booking.room_id = room.id \
+                                    AND ((%s > booking.check_in AND %s < booking.check_out) \
+                                    OR (%s > booking.check_in AND %s < booking.check_out) \
+                                    OR (%s < booking.check_in AND %s > booking.check_out) )) \
+                                    ORDER BY hname', [ctr, guests, check_in, check_in, check_out, check_out, check_in, check_out])
             room = list(room)
             count = len(room)
             hotel = ''
