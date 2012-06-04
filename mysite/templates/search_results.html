@@ -9,6 +9,7 @@
             {% if c.name %}
                 <li>
                     <form action="/booking/1" method="post">
+                        {% csrf_token %}
                         Номер <strong>{{ c.name }}</strong>.
                         <input type="hidden" value= {{ c.id }} name = room_id> 
                         <input value= {{ in }} type="hidden" name = "in"/>

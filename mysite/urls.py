@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     ('^time/$', views.current_datetime),
     (r'^search_form/$', views.search_form),
     (r'^search/$', views.search),
+    (r'^booking/1$', views.booking_1),
 )

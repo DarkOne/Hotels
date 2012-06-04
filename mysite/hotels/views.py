@@ -1,6 +1,7 @@
 # Create your views here.
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from mysite.hotels.models import City, Hotel, HotelRoom, Country, Booking
@@ -24,6 +25,13 @@ def search_form(request):
     now = datetime.date.isoformat(datetime.datetime.now())
     return render_to_response('search_form.html', {'now': now})
     
+def booking_1(request):
+    
+    #if ('room_id', 'in', 'out') in request.GET and request.GET['room_id', 'in', 'out']:
+    now = datetime.date.isoformat(datetime.datetime.now())
+    #else:
+    return render_to_response('current_datetime.html', {'current_datetime': now})
+
 def search(request):
     if 'city' in request.GET and request.GET['city']:
         if 'guests' in request.GET and request.GET['guests']:
@@ -58,8 +66,9 @@ def search(request):
                     hotel = i.hname
                 rooms.append(i)
             l = len(rooms)           
-            
-            return render_to_response('search_results.html', {'city': city, 'guests': guests, 'count': count, 'rooms': rooms, 'in': check_in, 'out': check_out})
+            c = {'city': city, 'guests': guests, 'count': count, 'rooms': rooms, 'in': check_in, 'out': check_out}
+            c.update(csrf(request))
+            return render_to_response('search_results.html', c)
         else:
             return HttpResponse('Выберите количество гостей.')
 
