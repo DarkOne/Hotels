@@ -24,13 +24,37 @@ def current_datetime(request):
 def search_form(request):
     now = datetime.date.isoformat(datetime.datetime.now())
     return render_to_response('search_form.html', {'now': now})
-    
+
 def booking_1(request):
-    
-    #if ('room_id', 'in', 'out') in request.GET and request.GET['room_id', 'in', 'out']:
+    room = request.POST
+    if 'room_id' in room and 'room_name' in room and 'hotel_name' in room and 'in' in room and 'out' in room:
+        room_id = room['room_id']
+        room_name = room['room_name']
+        hotel_name = room['hotel_name']
+        check_in = room['in']
+        check_out = room['out']
+        c = {'room_id': room_id, 'room_name': room_name, 'hotel_name': hotel_name, 'in': check_in, 'out': check_out}
+        c.update(csrf(request))
+        return render_to_response('booking_1.html', c)
+        #now = datetime.date.isoformat(datetime.datetime.now())
+        #return render_to_response('current_datetime.html', {'current_datetime': now})
+    else:
+        return HttpResponse('Error')
+        
+def booking_2(request):
+    room = request.POST
     now = datetime.date.isoformat(datetime.datetime.now())
-    #else:
-    return render_to_response('current_datetime.html', {'current_datetime': now})
+    if 'room_id' in room and 'in' in room and 'out' in room and 'name' in room:
+        room_id = room['room_id']
+        check_in = room['in']
+        check_out = room['out']
+        name = room['name']
+        room = Booking(room_id = room_id, guest_name = name, check_in = check_in, check_out = check_out)
+        room.save()
+        now = datetime.date.isoformat(datetime.datetime.now())
+        return render_to_response('current_datetime.html', {'current_datetime': now})
+    else:
+        return HttpResponse('Error')
 
 def search(request):
     if 'city' in request.GET and request.GET['city']:

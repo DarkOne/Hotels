@@ -20,4 +20,5 @@ urlpatterns = patterns('',
     (r'^search_form/$', views.search_form),
     (r'^search/$', views.search),
     (r'^booking/1$', views.booking_1),
+    (r'^booking/2$', views.booking_2),
 )

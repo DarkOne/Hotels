@@ -1,0 +1,12 @@
+<p>Вы хотите забронировать комнату <strong>{{ room_name }}</strong> в отлеле <strong>{{ hotel_name }}</strong>
+c <strong>{{ in }}</strong> по <strong>{{ out }}</strong></p> 
+<p>Введите ваше имя и подтвердите бронирование.</p>
+<form action="/booking/2" method="post">
+    {% csrf_token %}
+    Введите Ваше имя:
+    <input type="text" name = "name">
+    <input type="hidden" value= {{ room_id }} name = "room_id">
+    <input value= {{ in }} type="hidden" name = "in">
+    <input value= {{ out }} type="hidden" name = "out">
+    <p><input type="submit" value="Забронировать"></p>
+</form>

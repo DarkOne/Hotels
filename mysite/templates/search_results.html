@@ -11,9 +11,11 @@
                     <form action="/booking/1" method="post">
                         {% csrf_token %}
                         Номер <strong>{{ c.name }}</strong>.
-                        <input type="hidden" value= {{ c.id }} name = room_id> 
-                        <input value= {{ in }} type="hidden" name = "in"/>
-                        <input value= {{ out }} type="hidden" name = "out"/>
+                        <input type="hidden" value= {{ c.id }} name = "room_id">
+                        <input type="hidden" value= {{ c.name }} name = "room_name">
+                        <input type="hidden" value= {{ c.hname }} name = "hotel_name">
+                        <input value= {{ in }} type="hidden" name = "in">
+                        <input value= {{ out }} type="hidden" name = "out">
                         <input type="submit" value="Забронировать">
                     </form>
                 </li>
