@@ -1,4 +1,4 @@
-<p>Вы хотите забронировать комнату <strong>{{ room_name }}</strong> в отлеле <strong>{{ hotel_name }}</strong>
+<p>Вы хотите забронировать комнату <strong>{{ room_name }}</strong> в отлеле <strong>{{ hotel_name }}</strong> в городе <strong>{{ city_name }}</strong>
 c <strong>{{ in }}</strong> по <strong>{{ out }}</strong></p> 
 <p>Введите ваше имя и подтвердите бронирование.</p>
 <form action="/booking/2" method="post">
@@ -6,6 +6,9 @@ c <strong>{{ in }}</strong> по <strong>{{ out }}</strong></p>
     Введите Ваше имя:
     <input type="text" name = "name">
     <input type="hidden" value= {{ room_id }} name = "room_id">
+    <input type="hidden" value= {{ room_name }} name = "room_name">
+    <input type="hidden" value= {{ hotel_name }} name = "hotel_name">
+    <input type="hidden" value= {{ city_name }} name = "city_name">
     <input value= {{ in }} type="hidden" name = "in">
     <input value= {{ out }} type="hidden" name = "out">
     <p><input type="submit" value="Забронировать"></p>
