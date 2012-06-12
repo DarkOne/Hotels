@@ -1,32 +1,32 @@
 
-<p>Вы ищете номера в городе <strong>{{ city.name }}</strong></p>
+<p>Вы ищете номера в городе <strong>{{ city }}</strong></p>
 
 {% if rooms %}
     <p>Найдено {{ count }} номеров на {{ guests }} человека.</p>
-    Дата заселения: {{ in }}    Дата выселения: {{ out }}
-    <ul>
-        {% for c in rooms %}
-            {% if c.name %}
+    <p>Дата заселения: {{ in }}</p>
+    <p>Дата выселения: {{ out }}</p>
+    <br>
+    {% regroup rooms|dictsort:"hname" by hname as rooms_by_hname %}
+    {% for hname in rooms_by_hname %}
+        <p>Отель: <strong>{{ hname.grouper }}</strong></p>
+        <ul>
+            {% for name in hname.list|dictsort:"name" %}
                 <li>
                     <form action="/booking/1" method="post">
                         {% csrf_token %}
-                        Номер <strong>{{ c.name }}</strong>.
-                        <input type="hidden" value= {{ city.name }} name = "city_name">
-                        <input type="hidden" value= {{ c.id }} name = "room_id">
-                        <input type="hidden" value= {{ c.name }} name = "room_name">
-                        <input type="hidden" value= {{ c.hname }} name = "hotel_name">
+                        Номер <strong>{{ name }}</strong>.
+                        <input type="hidden" value= {{ name.cname }} name = "city_name">
+                        <input type="hidden" value= {{ name.id }} name = "room_id">
+                        <input type="hidden" value= {{ name.name }} name = "room_name">
+                        <input type="hidden" value= {{ name.hname }} name = "hotel_name">
                         <input value= {{ in }} type="hidden" name = "in">
                         <input value= {{ out }} type="hidden" name = "out">
                         <input type="submit" value="Забронировать">
                     </form>
                 </li>
-            {% else %}
-                <p>
-                Отель: <strong> {{ c }} </strong>
-                <p>
-            {% endif %}
-        {% endfor %}
-    </ul>
+            {% endfor %}
+        </ul>
+    {% endfor %}
 {% else %}
     <p>Комнат не найдено.</p>
 {% endif %}
